@@ -8,7 +8,6 @@ import re
 
 def solve_part1(puzzle_input: str) -> str:
     rotations = parse_rotations(puzzle_input)
-
     count = 0
     val = 50
     for r in rotations:
@@ -20,7 +19,25 @@ def solve_part1(puzzle_input: str) -> str:
 
 
 def solve_part2(puzzle_input: str) -> str:
-    return "TODO"
+    rotations = parse_rotations(puzzle_input)
+    count = 0
+    val = 50
+    for r in rotations:
+        count += rotate(r, val)
+        val += r.val
+
+    return str(count)
+
+
+def rotate(rotation: Rotation, init: int) -> int:
+    step = 1 if rotation.val >= 0 else -1
+    count = 0
+    for _ in range(0, abs(rotation.val)):
+        init += step
+        if init % 100 == 0:
+            count += 1
+
+    return count
 
 
 REGEX = re.compile(r"(?P<dir>L|R)(?P<num>\d+)")
