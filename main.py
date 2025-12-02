@@ -7,7 +7,7 @@ from enum import IntEnum, auto
 from pathlib import Path
 from typing import Callable, TypeVar
 
-from src.solutions import day01
+from src.solutions import day01, day02
 
 T = TypeVar("T")
 
@@ -21,6 +21,7 @@ class CliArgs:
 
 class Day(IntEnum):
     D01 = auto()
+    D02 = auto()
 
 
 class Part(IntEnum):
@@ -34,6 +35,10 @@ def select_solver(day: Day, part: Part) -> Callable[[str], str]:
             return day01.solve_part1
         case (Day.D01, Part.P2):
             return day01.solve_part2
+        case (Day.D02, Part.P1):
+            return day02.solve_part1
+        case (Day.D02, Part.P2):
+            return day02.solve_part2
         case _:
             raise RuntimeError(f"Solver for day {day} part {part} not implemented")
 
