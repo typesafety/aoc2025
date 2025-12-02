@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import itertools
-from typing import Iterable, Self
+from typing import Any, Iterable, Iterator, Self
 import re
 
 
@@ -52,8 +52,17 @@ def valid2(n: int) -> bool:
 
     for n in reversed(range(1, sn_len)):
         if sn_len % n == 0:
-            if len(set(itertools.batched(sn, n))) == 1:
+            if all_equal(itertools.batched(sn, n)):
                 return False
+
+    return True
+
+
+def all_equal(seqs: Iterator[Any]) -> bool:
+    indicator = next(seqs, None)
+    for seq in seqs:
+        if seq != indicator:
+            return False
 
     return True
 

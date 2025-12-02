@@ -62,10 +62,7 @@ def make_argparse_parser() -> ArgumentParser:
 
 
 def parse_cli_args(day: int, part: int, input_path: str) -> CliArgs:
-    days: dict[int, Day] = {
-        1: Day.D01,
-        2: Day.D02,
-    }
+    days: dict[int, Day] = {1: Day.D01, 2: Day.D02}
     parts: dict[int, Part] = {1: Part.P1, 2: Part.P2}
 
     if (parsed_day := days.get(day)) is None:
