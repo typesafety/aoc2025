@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import itertools
 from typing import Iterable, Self
 import re
 
@@ -18,7 +19,15 @@ def solve_part1(puzzle_input: str) -> str:
 
 
 def solve_part2(puzzle_input: str) -> str:
-    return str(puzzle_input)
+    ranges = parse_ranges(puzzle_input)
+
+    invalids: list[int] = []
+    for r in ranges:
+        for n in r.nums:
+            if not valid2(n):
+                invalids.append(n)
+
+    return str(sum(invalids))
 
 
 REGEX = re.compile(r"(?P<start>\d+)-(?P<end>\d+)")
@@ -35,6 +44,18 @@ def valid(n: int) -> bool:
     second = sn[len(sn) // 2 :]
 
     return first != second
+
+
+def valid2(n: int) -> bool:
+    sn = str(n)
+    sn_len = len(sn)
+
+    for n in reversed(range(1, sn_len)):
+        if sn_len % n == 0:
+            if len(set(itertools.batched(sn, n))) == 1:
+                return False
+
+    return True
 
 
 def parse_ranges(text: str) -> list[Range]:
