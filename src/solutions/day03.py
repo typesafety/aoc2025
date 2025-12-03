@@ -3,12 +3,12 @@ from __future__ import annotations
 
 def solve_part1(puzzle_input: str) -> str:
     banks = puzzle_input.strip().splitlines()
-
     return str(sum(largest_joltage(bank, num_batteries=2) for bank in banks))
 
 
 def solve_part2(puzzle_input: str) -> str:
-    return puzzle_input
+    banks = puzzle_input.strip().splitlines()
+    return str(sum(largest_joltage(bank, num_batteries=12) for bank in banks))
 
 
 def largest_joltage(bank: str, num_batteries: int) -> int:
