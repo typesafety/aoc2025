@@ -7,7 +7,7 @@ from enum import IntEnum, auto
 from pathlib import Path
 from typing import Callable, TypeVar
 
-from src.solutions import day01, day02
+from src.solutions import day01, day02, day03
 
 T = TypeVar("T")
 
@@ -22,6 +22,7 @@ class CliArgs:
 class Day(IntEnum):
     D01 = auto()
     D02 = auto()
+    D03 = auto()
 
 
 class Part(IntEnum):
@@ -39,6 +40,10 @@ def select_solver(day: Day, part: Part) -> Callable[[str], str]:
             return day02.solve_part1
         case (Day.D02, Part.P2):
             return day02.solve_part2
+        case (Day.D03, Part.P1):
+            return day03.solve_part1
+        case (Day.D03, Part.P2):
+            return day03.solve_part2
         case _:
             raise RuntimeError(f"Solver for day {day} part {part} not implemented")
 
@@ -62,7 +67,7 @@ def make_argparse_parser() -> ArgumentParser:
 
 
 def parse_cli_args(day: int, part: int, input_path: str) -> CliArgs:
-    days: dict[int, Day] = {1: Day.D01, 2: Day.D02}
+    days: dict[int, Day] = {1: Day.D01, 2: Day.D02, 3: Day.D03}
     parts: dict[int, Part] = {1: Part.P1, 2: Part.P2}
 
     if (parsed_day := days.get(day)) is None:
