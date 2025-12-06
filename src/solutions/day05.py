@@ -2,19 +2,17 @@ from __future__ import annotations
 
 import copy
 from dataclasses import dataclass
-from pprint import pprint, pformat  # noqa: F401
 from typing import Self
 
 
 def solve_part1(puzzle_input: str) -> str:
     ranges, ids = parse_input(puzzle_input)
+    merged = merge_ranges(ranges)
 
-    fresh: set[int] = set()
-    for ident in ids:
-        if any(r.contains(ident) for r in ranges):
-            fresh.add(ident)
+    def in_range_set(ident: int, range_set: set[Range]) -> bool:
+        return any(r.contains(ident) for r in range_set)
 
-    return str(len(fresh))
+    return str(len([ident for ident in ids if in_range_set(ident, merged)]))
 
 
 def solve_part2(puzzle_input: str) -> str:
