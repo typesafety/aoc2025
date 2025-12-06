@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import copy
 from dataclasses import dataclass
-from pprint import pprint, pformat  # noqa: F401
 
 
 def solve_part1(puzzle_input: str) -> str:
@@ -58,7 +57,7 @@ def adjacents(p: Point) -> set[Point]:
 
 @dataclass
 class Grid:
-    points: dict[Point, str]  # True = roll of paper
+    points: dict[Point, str]
 
     @property
     def rolls(self) -> set[Point]:
@@ -67,6 +66,7 @@ class Grid:
     def accessible(self, p: Point) -> bool:
         occupied_adjacents = {p for p in adjacents(p) if self.points[p] == "@"}
         return len(occupied_adjacents) < 4
+
 
 @dataclass(frozen=True)
 class Point:
