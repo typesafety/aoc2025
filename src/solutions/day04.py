@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 from dataclasses import dataclass
 from pprint import pprint, pformat  # noqa: F401
 
@@ -11,7 +12,22 @@ def solve_part1(puzzle_input: str) -> str:
 
 
 def solve_part2(puzzle_input: str) -> str:
-    return puzzle_input
+    starting_grid = make_grid(puzzle_input)
+
+    def shave(grid: Grid) -> int:
+        accessible = {p for p in grid.rolls if grid.accessible(p)}
+        if len(accessible) == 0:
+            return 0
+
+        new_grid = copy.copy(grid)
+        for p in accessible:
+            new_grid.points[p] = "."
+
+        return len(accessible) + shave(new_grid)
+
+    shaved = shave(starting_grid)
+
+    return str(shaved)
 
 
 def make_grid(puzzle_input: str) -> Grid:
