@@ -8,3 +8,9 @@ def find(predicate: Callable[[T], bool], xs: Iterable[T]) -> T | None:
         if predicate(x):
             return x
     return None
+
+
+def unwrap(val: T | None) -> T:
+    if val is None:
+        raise ValueError("Tried to unwrap None")
+    return val
